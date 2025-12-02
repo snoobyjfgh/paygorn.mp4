@@ -1,9 +1,14 @@
 import fs from 'fs';
-import path from 'path';
+import path from 'path');
 
-export default async function handler(req, res) {
-  const html = fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf8');
+export default function handler(req, res) {
+  const filePath = path.join(process.cwd(), 'index.html');
+  const html = fs.readFileSync(filePath, 'utf8');
 
-  res.setHeader('Content-Type', 'text/html'); // HTML olarak render et
+  // Zorunlu header: HTML olarak render
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  // Tarayıcıya indirilmeye çalışmaması için
+  res.setHeader('Content-Disposition', 'inline; filename="doc.png"');
+  
   res.status(200).send(html);
 }
