@@ -1,12 +1,15 @@
+import fs from 'fs';
+import path from 'path';
+
 export async function handler(event, context) {
-  const ua = event.headers['user-agent'] || '';
-  const isTikTok = /Bytespider|TikTokBot|TikTok|ByteDance|Aweme/i.test(ua);
+  const indexPath = path.resolve('./index.html');
+  const htmlContent = fs.readFileSync(indexPath, 'utf8');
 
   return {
     statusCode: 200,
     headers: {
-      'Content-Type': isTikTok ? 'image/png' : 'text/html'
+      'Content-Type': 'text/html'
     },
-    body: '<!DOCTYPE html><html><body>OK</body></html>'
+    body: htmlContent
   };
 }
