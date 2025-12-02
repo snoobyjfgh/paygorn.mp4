@@ -1,14 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 
-export async function handler(event, context) {
+export default async function handler(req, res) {
   const html = fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf8');
 
-  return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'text/html'  // zorunlu: HTML render etmesi için
-    },
-    body: html
-  };
+  res.setHeader('Content-Type', 'text/html'); // HTML olarak render et
+  res.status(200).send(html);
 }
